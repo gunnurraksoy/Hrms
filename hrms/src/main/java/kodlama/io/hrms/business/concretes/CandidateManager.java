@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.common.base.Objects;
+
 import kodlama.io.hrms.business.abstracts.CandidateService;
 import kodlama.io.hrms.core.adapters.abstracts.FakeMailService;
 import kodlama.io.hrms.core.adapters.abstracts.FakeMernisService;
@@ -13,7 +15,7 @@ import kodlama.io.hrms.core.utilities.results.ErrorResult;
 import kodlama.io.hrms.core.utilities.results.Result;
 import kodlama.io.hrms.core.utilities.results.SuccessDataResult;
 import kodlama.io.hrms.core.utilities.results.SuccessResult;
-import kodlama.io.hrms.dataAccess.abstracts.CandidatesDao;
+import kodlama.io.hrms.dataAccess.abstracts.CandidateDao;
 import kodlama.io.hrms.entities.concretes.Candidate;
 
 
@@ -21,13 +23,13 @@ import kodlama.io.hrms.entities.concretes.Candidate;
 @Service
 public class CandidateManager implements CandidateService {
 	
-	private CandidatesDao candidateDao;
+	private CandidateDao candidateDao;
 	private FakeMernisService fakeMernisService;
 	private FakeMailService fakeMailService;
 
 
 	@Autowired
-	public CandidateManager(CandidatesDao candidateDao,FakeMernisService fakeMernisService,FakeMailService fakeMailService) {
+	public CandidateManager(CandidateDao candidateDao,FakeMernisService fakeMernisService,FakeMailService fakeMailService) {
 		super();
 		this.candidateDao = candidateDao;
 		this.fakeMernisService=fakeMernisService;
@@ -40,7 +42,7 @@ public class CandidateManager implements CandidateService {
 	}
 
 	@Override
-	public Result add(Candidate candidate) {
+	public Result add(Candidate candidate, String passwordAgain ) {
 		if(candidate.getFirstName().isEmpty() || candidate.getLastName().isEmpty()
 				|| candidate.getIdentityNumber() == null|| candidate.getBirthYear()==null
 				|| candidate.getEmail() == null || candidate.getPassword() == null ) {
@@ -53,10 +55,16 @@ public class CandidateManager implements CandidateService {
 				
 		}else if(candidateDao.findByEmailEquals(candidate.getEmail()) != null) {
 			return new ErrorResult("Kullanilan bir email adresi  girdiniz!");
+			
 		}else if(!fakeMernisService.checkIfRealPerson(candidate.getFirstName(), candidate.getLastName(), candidate.getIdentityNumber(), candidate.getBirthYear())) {
 			return new ErrorResult("Mernis Dogrulamasi basarisiz. Bilgilerinizi  tekrar kontrol ediniz! ");
+			
 		}else if(!fakeMailService.isMailValidation(candidate.getEmail())) {
 			return new ErrorResult("Eposta dogrulamasi yapmadiniz. Kaydiniz olusmadi");
+			
+		}else if (!Objects.equal(passwordAgain, candidate.getPassword())) {
+			return new ErrorResult("Şİfreler uyuşmuyor.");		
+			
 			
 		}else {
 			candidateDao.save(candidate);
@@ -64,5 +72,7 @@ public class CandidateManager implements CandidateService {
 		}
 		
 	}
+
+	
 
 }

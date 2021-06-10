@@ -2,8 +2,6 @@ package kodlama.io.hrms.entities.concretes;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -17,7 +15,6 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name="employees")
-@Inheritance(strategy = InheritanceType.JOINED)
 @EqualsAndHashCode(callSuper = false)
 @PrimaryKeyJoinColumn(name="id", referencedColumnName = "id")
 @AllArgsConstructor

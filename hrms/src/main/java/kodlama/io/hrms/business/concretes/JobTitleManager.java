@@ -31,6 +31,7 @@ public class JobTitleManager implements JobTitleService {
 
 	@Override
 	public Result add(JobTitle jobTitle) {
+		
 		if(jobTitleDao.findByTitle(jobTitle.getTitle()) !=null) {
 			return new ErrorResult("Bu pozisyon daha önce eklendi ");
 		}else {	

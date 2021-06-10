@@ -37,6 +37,9 @@ public class EmployerManager implements EmployerService {
 
 	@Override
 	public Result add(Employer employer) {
+		//abc deneme.com
+		//www.deneme.com
+		
 		String[] domain = employer.getEmail().split("@");
 		String website=employer.getWebAddress().substring(4);
 
@@ -50,10 +53,9 @@ public class EmployerManager implements EmployerService {
 			return new ErrorResult("e-posta ve web sitesi uyusmuyor.");
 		} else
 
-		if (employerDao.findByEmailEquals(employer.getEmail()) != null
-				|| employerDao.findByWebAddressEquals(employer.getWebAddress()) != null) {
-			return new ErrorResult("Bu e posta zaten kullaniliyor");
-		} else
+		if (employerDao.findByEmailEquals(employer.getEmail()) != null) {
+			return new ErrorResult("Bu e posta  zaten kullaniliyor");
+		} 
 
 		if (!fakeMailService.isMailValidation(employer.getEmail())) {
 			return new ErrorResult("Mail dogrulamasi gerceklesmedi. Kayit basarisiz");

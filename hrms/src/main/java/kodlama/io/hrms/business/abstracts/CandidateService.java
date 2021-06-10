@@ -8,7 +8,8 @@ import kodlama.io.hrms.entities.concretes.Candidate;
 
 public interface CandidateService {
 	
-	public DataResult<List<Candidate>> getAll();
-	public Result add(Candidate candidate);
+	DataResult<List<Candidate>> getAll();
+	
+	Result add(Candidate candidate, String passwordAgain);
 
 }

@@ -32,8 +32,8 @@ public class CandidatesController {
 	}
 	
 	@PostMapping("/add")
-	public Result add(@RequestBody Candidate candidate) {
-		return candidateService.add(candidate);
+	public Result add(@RequestBody Candidate candidate,String passwordAgain) {
+		return candidateService.add(candidate,passwordAgain);
 		
 	}
 }
