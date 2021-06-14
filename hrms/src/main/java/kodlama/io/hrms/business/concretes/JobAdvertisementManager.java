@@ -37,7 +37,7 @@ private JobAdvertisementDao jobAdvertisementDao;
 
 	@Override
 	public DataResult<List<JobAdvertisement>> getAll() {
-		return new SuccessDataResult<List<JobAdvertisement>>(this.jobAdvertisementDao.findAll(),"Tüm iş ,lanları lListelendi");
+		return new SuccessDataResult<List<JobAdvertisement>>(this.jobAdvertisementDao.findAll(),"Tüm iş ilanları lListelendi");
 	}
 
 

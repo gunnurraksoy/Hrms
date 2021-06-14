@@ -6,5 +6,6 @@ import kodlama.io.hrms.entities.concretes.Candidate;
 
 public interface CandidateDao extends JpaRepository<Candidate, Integer>{
 	Candidate findByIdentityNumberEquals(String findIdentityNumber);
+	Candidate findById(int id);
 	Candidate findByEmailEquals(String findEmail);
 }

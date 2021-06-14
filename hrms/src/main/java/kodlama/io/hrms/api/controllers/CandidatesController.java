@@ -12,6 +12,7 @@ import kodlama.io.hrms.business.abstracts.CandidateService;
 import kodlama.io.hrms.core.utilities.results.DataResult;
 import kodlama.io.hrms.core.utilities.results.Result;
 import kodlama.io.hrms.entities.concretes.Candidate;
+import kodlama.io.hrms.entities.dtos.CvDto;
 
 
 @RestController
@@ -35,5 +36,9 @@ public class CandidatesController {
 	public Result add(@RequestBody Candidate candidate,String passwordAgain) {
 		return candidateService.add(candidate,passwordAgain);
 		
+	}
+	@GetMapping("/getcv")
+	public DataResult<CvDto> getCvById(int id){
+		return this.candidateService.getCvById(id);
 	}
 }
